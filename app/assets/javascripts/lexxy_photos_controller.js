@@ -93,6 +93,9 @@ export default class extends Controller {
 
   // ── Delete ─────────────────────────────────────────────────────────────────
 
+  // Public alias so server-rendered delete buttons can use data-action="click->lexxy-photos#deletePhoto"
+  async deletePhoto(event) { return this._deletePhoto(event) }
+
   async _deletePhoto(event) {
     const wrapper      = event.currentTarget.closest("[data-attachment-id]")
     if (!wrapper) return
@@ -129,6 +132,9 @@ export default class extends Controller {
 
   // ── Click to insert at cursor ──────────────────────────────────────────────
 
+  // Public alias for server-rendered thumbnails using data-action
+  async onThumbnailClick(event) { return this._onThumbnailClick(event) }
+
   async _onThumbnailClick(event) {
     const originalUrl = event.target.closest("img")?.dataset.originalUrl
     if (!originalUrl || !this._editorEl) return
@@ -150,6 +156,14 @@ export default class extends Controller {
   }
 
   // ── Drag from panel → editor ───────────────────────────────────────────────
+
+  // Public alias for server-rendered thumbnails using data-action="dragstart->lexxy-photos#onThumbnailDragStart"
+  onThumbnailDragStart(event) {
+    const originalUrl = (event.target.closest("img") || event.target).dataset.originalUrl
+    if (!originalUrl) return
+    event.dataTransfer.setData(DRAG_TYPE, originalUrl)
+    event.dataTransfer.effectAllowed = "copy"
+  }
 
   _onImgDragStart = (event) => {
     const originalUrl = event.target.dataset.originalUrl
