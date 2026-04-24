@@ -9,10 +9,5 @@ module LexxyPhotos
       end
     end
 
-    config.to_prepare do
-      LexxyPhotos.config.before_actions.each do |action|
-        LexxyPhotos::ApplicationController.before_action(action)
-      end
-    end
   end
 end
