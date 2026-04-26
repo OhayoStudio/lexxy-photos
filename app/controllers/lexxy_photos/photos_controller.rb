@@ -23,8 +23,8 @@ module LexxyPhotos
 
       render json: {
         id:           attachment.id,
-        url:          url_for(blob.variant(resize_to_limit: cfg.thumbnail_size)),
-        original_url: rails_blob_path(blob, disposition: "inline")
+        url:          main_app.url_for(blob.variant(resize_to_limit: cfg.thumbnail_size)),
+        original_url: main_app.rails_blob_path(blob, disposition: "inline")
       }, status: :ok
     rescue => e
       Rails.logger.error "[LexxyPhotos] upload failed for record ##{@record&.id}: #{e.message}"
